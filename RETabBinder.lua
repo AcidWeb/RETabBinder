@@ -1,3 +1,5 @@
+SLASH_RETABBINDER1, SLASH_RETABBINDER2 = "/rtb", "/retabbinder";
+
 function RETabBinder_OnLoad(self)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
@@ -8,8 +10,6 @@ function RETabBinder_OnLoad(self)
 
 	RTB_Fail = false
 end
-
-SLASH_RETABBINDER1, SLASH_RETABBINDER2 = "/rtb", "/retabbinder";
 
 function SlashCmdList.RETABBINDER(msg)
 	if msg == "" then
@@ -27,21 +27,16 @@ function SlashCmdList.RETABBINDER(msg)
 end
 
 function RETabBinder_OnEvent(event,...)
-
 	if event == "ADDON_LOADED" then
 		if RTB_DefaultKey == nil then
 			RTB_DefaultKey = true;
 		end
-	end
-
-	if event == "CHAT_MSG_SYSTEM" then
+	elseif event == "CHAT_MSG_SYSTEM" then
 		local RTBChatMessage = ...;
 		if RTBChatMessage == ERR_DUEL_REQUESTED then
 			event = "DUEL_REQUESTED"
 		end
-	end
-
-	if event=="ZONE_CHANGED_NEW_AREA" or (event=="PLAYER_REGEN_ENABLED" and RTB_Fail) or event=="DUEL_REQUESTED" or event=="DUEL_FINISHED" then
+	elseif event=="ZONE_CHANGED_NEW_AREA" or (event=="PLAYER_REGEN_ENABLED" and RTB_Fail) or event=="DUEL_REQUESTED" or event=="DUEL_FINISHED" then
 		local RTB_BindSet = GetCurrentBindingSet();
 		local RTB_PVPType = GetZonePVPInfo();
 		local _, RTB_ZoneType = IsInInstance();
@@ -53,7 +48,7 @@ function RETabBinder_OnEvent(event,...)
 		if RTB_TargetKey == nil and RTB_DefaultKey == true then
 			RTB_TargetKey = "TAB"
 		end
-		
+
 		RTB_LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMYPLAYER");
 		if RTB_LastTargetKey == nil then
 			RTB_LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMY");
@@ -61,7 +56,7 @@ function RETabBinder_OnEvent(event,...)
 		if RTB_LastTargetKey == nil and RTB_DefaultKey == true then
 			RTB_LastTargetKey = "SHIFT-TAB"
 		end
-		
+
 		if RTB_TargetKey ~= nil then
 			RTB_CurrentBind = GetBindingAction(RTB_TargetKey);
 		end
