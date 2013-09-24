@@ -1,0 +1,6 @@
+## Interface: 40000
+## Title: RETabBinder
+## Notes: Changes tab binding to only target enemy players when in PvP zones. Modified by Livarax for 4.x patch.
+## Version: 1.1
+## Author: Veev-Executus(US), Livarax-Karazhan(EU)
+RETabBinder.xml
