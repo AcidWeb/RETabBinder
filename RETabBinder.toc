@@ -1,7 +1,7 @@
-## Interface: 50400
-## Title: RETabBinder
-## Notes: Changes tab binding to only target enemy players when in PvP zones. Modified by AcidWeb for 4.x/5.x patch.
-## Version: 1.2.8
+## Interface: 60200
+## Title: |cFF74D06CRE|rTabBinder
+## Notes: Changes TAB binding to only target enemy players when in PvP zones.
+## Version: 1.2.9
 ## Author: AcidWeb, Veev-Executus(US)
 ## SavedVariablesPerCharacter: RTB_DefaultKey
 RETabBinder.xml

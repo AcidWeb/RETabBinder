@@ -15,11 +15,11 @@ function SlashCmdList.RETABBINDER(msg)
 	if msg == "" then
 		print("\124cFF74D06C[RETabBinder]\124r");
 		print("/rtb default - Toggle default keybinds.")
-	elseif msg == "default" then 
+	elseif msg == "default" then
 		if RTB_DefaultKey == true then
 			RTB_DefaultKey = false;
 			print("\124cFF74D06C[RETabBinder]\124r Default keybinds disabled.");
-		else 
+		else
 			RTB_DefaultKey = true;
 			print("\124cFF74D06C[RETabBinder]\124r Default keybinds enabled.");
 		end
@@ -36,7 +36,7 @@ function RETabBinder_OnEvent(event,...)
 		if RTBChatMessage == ERR_DUEL_REQUESTED then
 			event = "DUEL_REQUESTED"
 		end
-	elseif event=="ZONE_CHANGED_NEW_AREA" or (event=="PLAYER_REGEN_ENABLED" and RTB_Fail) or event=="DUEL_REQUESTED" or event=="DUEL_FINISHED" then
+	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RTB_Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" then
 		local RTB_BindSet = GetCurrentBindingSet();
 		local RTB_PVPType = GetZonePVPInfo();
 		local _, RTB_ZoneType = IsInInstance();
@@ -61,17 +61,17 @@ function RETabBinder_OnEvent(event,...)
 			RTB_CurrentBind = GetBindingAction(RTB_TargetKey);
 		end
 
-		if RTB_ZoneType == "arena" or RTB_PVPType == "combat" or RTB_ZoneType == "pvp" or event=="DUEL_REQUESTED" then
+		if RTB_ZoneType == "arena" or RTB_PVPType == "combat" or RTB_ZoneType == "pvp" or event == "DUEL_REQUESTED" then
 			if RTB_CurrentBind ~= "TARGETNEARESTENEMYPLAYER" then
 				if RTB_TargetKey == nil then
-					RTB_Success = 1;
-				else 
+					RTB_Success = true;
+				else
 					RTB_Success = SetBinding(RTB_TargetKey,"TARGETNEARESTENEMYPLAYER");
 				end
 				if RTB_LastTargetKey ~= nil then
 					SetBinding(RTB_LastTargetKey,"TARGETPREVIOUSENEMYPLAYER");
 				end
-				if RTB_Success == 1 then
+				if RTB_Success == true then
 					SaveBindings(RTB_BindSet);
 					RTB_Fail = false;
 					print("\124cFF74D06C[RETabBinder]\124r PVP Mode");
@@ -82,14 +82,14 @@ function RETabBinder_OnEvent(event,...)
 		else
 			if RTB_CurrentBind ~= "TARGETNEARESTENEMY" then
 				if RTB_TargetKey == nil then
-					RTB_Success = 1;
+					RTB_Success = true;
 				else
 					RTB_Success = SetBinding(RTB_TargetKey,"TARGETNEARESTENEMY");
 				end
 				if RTB_LastTargetKey ~= nil then
 					SetBinding(RTB_LastTargetKey,"TARGETPREVIOUSENEMY");
 				end
-				if RTB_Success == 1 then
+				if RTB_Success == true then
 					SaveBindings(RTB_BindSet);
 					RTB_Fail = false;
 					print("\124cFF74D06C[RETabBinder]\124r PVE Mode");
