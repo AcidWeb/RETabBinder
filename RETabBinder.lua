@@ -50,6 +50,9 @@ function RETabBinder_OnEvent(event, ...)
 		RETabBinder_ConfigReload();
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" then
 		local BindSet = GetCurrentBindingSet();
+		if InCombatLockdown() or (BindSet ~= 1 and BindSet ~= 2) then
+			return
+		end
 		local PVPType = GetZonePVPInfo();
 		local _, ZoneType = IsInInstance();
 
