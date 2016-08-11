@@ -36,6 +36,7 @@ function RETabBinder_OnLoad(self)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterEvent("DUEL_REQUESTED");
 	self:RegisterEvent("DUEL_FINISHED");
+	self:RegisterEvent("CHAT_MSG_SYSTEM");
 	self:RegisterEvent("ADDON_LOADED");
 end
 
@@ -48,7 +49,13 @@ function RETabBinder_OnEvent(event, ...)
 		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig);
 		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder");
 		RETabBinder_ConfigReload();
-	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" then
+	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
+		if event == "CHAT_MSG_SYSTEM" and ... == ERR_DUEL_REQUESTED then
+			event = "DUEL_REQUESTED";
+		elseif event == "CHAT_MSG_SYSTEM" then
+			return
+		end
+
 		local BindSet = GetCurrentBindingSet();
 		if InCombatLockdown() or (BindSet ~= 1 and BindSet ~= 2) then
 			return
