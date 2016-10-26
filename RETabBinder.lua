@@ -128,10 +128,8 @@ end
 
 function RETabBinder_ConfigReload()
 	if RES.OldLogic then
-		SetCVar("TargetPriorityAllowAnyOnScreen", 0);
 		SetCVar("TargetNearestUseOld", 1);
 	else
-		SetCVar("TargetPriorityAllowAnyOnScreen", 1);
 		SetCVar("TargetNearestUseOld", 0);
 	end
 	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil);
