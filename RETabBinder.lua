@@ -14,20 +14,10 @@ RE.AceConfig = {
 			set = function(_, val) RES.DefaultKey = val; RETabBinder_ConfigReload(); end,
 			get = function(_) return RES.DefaultKey end
 		},
-		OldLogic = {
-			name = "Use pre-7.x targeting logic",
-			desc = "Disable new targeting algorithm.",
-			type = "toggle",
-			width = "full",
-			order = 2,
-			set = function(_, val) RES.OldLogic = val; RETabBinder_ConfigReload(); end,
-			get = function(_) return RES.OldLogic end
-		}
 	}
 };
 RE.DefaultConfig = {
-	DefaultKey = true,
-	OldLogic = false
+	DefaultKey = true
 };
 RE.Fail = false;
 
@@ -127,10 +117,6 @@ function RETabBinder_OnEvent(event, ...)
 end
 
 function RETabBinder_ConfigReload()
-	if RES.OldLogic then
-		SetCVar("TargetNearestUseOld", 1);
-	else
-		SetCVar("TargetNearestUseOld", 0);
-	end
+	SetCVar("TargetNearestUseOld", 1);
 	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil);
 end
