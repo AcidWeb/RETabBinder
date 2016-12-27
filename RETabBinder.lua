@@ -1,6 +1,5 @@
-RETabBinderNamespace = {};
-local RE = RETabBinderNamespace;
-local RES = RETabBinderSettings;
+RETabBinderNamespace = {["Settings"] = {}}
+local RE = RETabBinderNamespace
 
 RE.AceConfig = {
 	type = "group",
@@ -11,105 +10,105 @@ RE.AceConfig = {
 			type = "toggle",
 			width = "full",
 			order = 1,
-			set = function(_, val) RES.DefaultKey = val; RETabBinder_ConfigReload(); end,
-			get = function(_) return RES.DefaultKey end
+			set = function(_, val) RE.Settings.DefaultKey = val; RETabBinder_ConfigReload() end,
+			get = function(_) return RE.Settings.DefaultKey end
 		},
 	}
-};
+}
 RE.DefaultConfig = {
 	DefaultKey = true
-};
-RE.Fail = false;
+}
+RE.Fail = false
 
 function RETabBinder_OnLoad(self)
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
-	self:RegisterEvent("PLAYER_REGEN_ENABLED");
-	self:RegisterEvent("DUEL_REQUESTED");
-	self:RegisterEvent("DUEL_FINISHED");
-	self:RegisterEvent("CHAT_MSG_SYSTEM");
-	self:RegisterEvent("ADDON_LOADED");
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("DUEL_REQUESTED")
+	self:RegisterEvent("DUEL_FINISHED")
+	self:RegisterEvent("CHAT_MSG_SYSTEM")
+	self:RegisterEvent("ADDON_LOADED")
 end
 
 function RETabBinder_OnEvent(event, ...)
 	if event == "ADDON_LOADED" and ... == "RETabBinder" then
 		if not RETabBinderSettings then
-			RETabBinderSettings = RE.DefaultConfig;
+			RETabBinderSettings = RE.DefaultConfig
 		end
-		RES = RETabBinderSettings;
-		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig);
-		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder");
-		RETabBinder_ConfigReload();
+		RE.Settings = RETabBinderSettings
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
+		RETabBinder_ConfigReload()
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
 		if event == "CHAT_MSG_SYSTEM" and ... == ERR_DUEL_REQUESTED then
-			event = "DUEL_REQUESTED";
+			event = "DUEL_REQUESTED"
 		elseif event == "CHAT_MSG_SYSTEM" then
 			return
 		end
 
-		local BindSet = GetCurrentBindingSet();
+		local BindSet = GetCurrentBindingSet()
 		if InCombatLockdown() or (BindSet ~= 1 and BindSet ~= 2) then
 			return
 		end
-		local PVPType = GetZonePVPInfo();
-		local _, ZoneType = IsInInstance();
+		local PVPType = GetZonePVPInfo()
+		local _, ZoneType = IsInInstance()
 
-		local TargetKey = GetBindingKey("TARGETNEARESTENEMYPLAYER");
+		local TargetKey = GetBindingKey("TARGETNEARESTENEMYPLAYER")
 		if TargetKey == nil then
-			TargetKey = GetBindingKey("TARGETNEARESTENEMY");
+			TargetKey = GetBindingKey("TARGETNEARESTENEMY")
 		end
-		if TargetKey == nil and RES.DefaultKey then
+		if TargetKey == nil and RE.Settings.DefaultKey then
 			TargetKey = "TAB"
 		end
 
-		local LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMYPLAYER");
+		local LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMYPLAYER")
 		if LastTargetKey == nil then
-			LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMY");
+			LastTargetKey = GetBindingKey("TARGETPREVIOUSENEMY")
 		end
-		if LastTargetKey == nil and RES.DefaultKey then
+		if LastTargetKey == nil and RE.Settings.DefaultKey then
 			LastTargetKey = "SHIFT-TAB"
 		end
 
-		local CurrentBind;
+		local CurrentBind
 		if TargetKey then
-			CurrentBind = GetBindingAction(TargetKey);
+			CurrentBind = GetBindingAction(TargetKey)
 		end
 
 		if ZoneType == "arena" or PVPType == "combat" or ZoneType == "pvp" or event == "DUEL_REQUESTED" then
 			if CurrentBind ~= "TARGETNEARESTENEMYPLAYER" then
-				local Success;
+				local Success
 				if TargetKey == nil then
-					Success = true;
+					Success = true
 				else
-					Success = SetBinding(TargetKey, "TARGETNEARESTENEMYPLAYER");
+					Success = SetBinding(TargetKey, "TARGETNEARESTENEMYPLAYER")
 				end
 				if LastTargetKey then
-					SetBinding(LastTargetKey, "TARGETPREVIOUSENEMYPLAYER");
+					SetBinding(LastTargetKey, "TARGETPREVIOUSENEMYPLAYER")
 				end
 				if Success then
-					SaveBindings(BindSet);
-					RE.Fail = false;
-					print("\124cFF74D06C[RETabBinder]\124r PVP Mode");
+					SaveBindings(BindSet)
+					RE.Fail = false
+					print("\124cFF74D06C[RETabBinder]\124r PVP Mode")
 				else
-					RE.Fail = true;
+					RE.Fail = true
 				end
 			end
 		else
 			if CurrentBind ~= "TARGETNEARESTENEMY" then
-				local Success;
+				local Success
 				if TargetKey == nil then
-					Success = true;
+					Success = true
 				else
-					Success = SetBinding(TargetKey, "TARGETNEARESTENEMY");
+					Success = SetBinding(TargetKey, "TARGETNEARESTENEMY")
 				end
 				if LastTargetKey then
-					SetBinding(LastTargetKey, "TARGETPREVIOUSENEMY");
+					SetBinding(LastTargetKey, "TARGETPREVIOUSENEMY")
 				end
 				if Success then
-					SaveBindings(BindSet);
-					RE.Fail = false;
-					print("\124cFF74D06C[RETabBinder]\124r PVE Mode");
+					SaveBindings(BindSet)
+					RE.Fail = false
+					print("\124cFF74D06C[RETabBinder]\124r PVE Mode")
 				else
-					RE.Fail = true;
+					RE.Fail = true
 				end
 			end
 		end
@@ -117,6 +116,6 @@ function RETabBinder_OnEvent(event, ...)
 end
 
 function RETabBinder_ConfigReload()
-	SetCVar("TargetNearestUseOld", 1);
-	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil);
+	SetCVar("TargetNearestUseOld", 1)
+	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil)
 end

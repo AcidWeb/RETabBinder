@@ -1,16 +1,12 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
 
-<Script file="RETabBinder.lua"/>
+	<Script file="RETabBinder.lua"/>
 
-<Frame name="RETabBinder_Frame">
-	<Scripts>
-		<OnLoad>
-			RETabBinder_OnLoad(self);
-		</OnLoad>
-		<OnEvent>
-			RETabBinder_OnEvent(event, ...);
-		</OnEvent>
-	</Scripts>
-</Frame>
+	<Frame name="RETabBinder_Frame">
+		<Scripts>
+			<OnLoad>RETabBinder_OnLoad(self)</OnLoad>
+			<OnEvent>RETabBinder_OnEvent(event, ...)</OnEvent>
+		</Scripts>
+	</Frame>
 
 </Ui>
