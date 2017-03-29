@@ -116,6 +116,5 @@ function RETabBinder_OnEvent(event, ...)
 end
 
 function RETabBinder_ConfigReload()
-	SetCVar("TargetNearestUseOld", 1)
 	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil)
 end
