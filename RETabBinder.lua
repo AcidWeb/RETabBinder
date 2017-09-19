@@ -1,6 +1,17 @@
 RETabBinderNamespace = {["Settings"] = {}}
 local RE = RETabBinderNamespace
 
+local print = print
+local InCombatLockdown = InCombatLockdown
+local IsInInstance = IsInInstance
+local GetCurrentBindingSet = GetCurrentBindingSet
+local GetZonePVPInfo = GetZonePVPInfo
+local GetBindingKey = GetBindingKey
+local GetBindingAction = GetBindingAction
+local SetBinding = SetBinding
+local SaveBindings = SaveBindings
+local ERR_DUEL_REQUESTED = ERR_DUEL_REQUESTED
+
 RE.AceConfig = {
 	type = "group",
 	args = {
