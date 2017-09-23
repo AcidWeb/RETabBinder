@@ -1,4 +1,5 @@
-RETabBinderNamespace = {["Settings"] = {}}
+local _G = _G
+_G.RETabBinderNamespace = {["Settings"] = {}}
 local RE = RETabBinderNamespace
 
 local print = print
@@ -12,6 +13,8 @@ local SetBinding = SetBinding
 local SaveBindings = SaveBindings
 local ERR_DUEL_REQUESTED = ERR_DUEL_REQUESTED
 
+-- GLOBALS: RETabBinder_OnLoad, RETabBinder_OnEvent, RETabBinder_ConfigReload
+
 RE.AceConfig = {
 	type = "group",
 	args = {
@@ -21,7 +24,7 @@ RE.AceConfig = {
 			type = "toggle",
 			width = "full",
 			order = 1,
-			set = function(_, val) RE.Settings.DefaultKey = val; RETabBinder_ConfigReload() end,
+			set = function(_, val) RE.Settings.DefaultKey = val; _G.RETabBinder_ConfigReload() end,
 			get = function(_) return RE.Settings.DefaultKey end
 		},
 	}
@@ -42,13 +45,13 @@ end
 
 function RETabBinder_OnEvent(event, ...)
 	if event == "ADDON_LOADED" and ... == "RETabBinder" then
-		if not RETabBinderSettings then
-			RETabBinderSettings = RE.DefaultConfig
+		if not _G.RETabBinderSettings then
+			_G.RETabBinderSettings = RE.DefaultConfig
 		end
-		RE.Settings = RETabBinderSettings
-		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
-		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
-		RETabBinder_ConfigReload()
+		RE.Settings = _G.RETabBinderSettings
+		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
+		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
+		_G.RETabBinder_ConfigReload()
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
 		if event == "CHAT_MSG_SYSTEM" and ... == ERR_DUEL_REQUESTED then
 			event = "DUEL_REQUESTED"
@@ -127,5 +130,5 @@ function RETabBinder_OnEvent(event, ...)
 end
 
 function RETabBinder_ConfigReload()
-	RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil)
+	_G.RETabBinder_OnEvent("ZONE_CHANGED_NEW_AREA", nil)
 end
