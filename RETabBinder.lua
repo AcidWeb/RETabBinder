@@ -2,18 +2,17 @@ local _G = _G
 _G.RETabBinderNamespace = {["Settings"] = {}}
 local RE = RETabBinderNamespace
 
-local print = print
-local InCombatLockdown = InCombatLockdown
-local IsInInstance = IsInInstance
-local GetCurrentBindingSet = GetCurrentBindingSet
-local GetZonePVPInfo = GetZonePVPInfo
-local GetBindingKey = GetBindingKey
-local GetBindingAction = GetBindingAction
-local SetBinding = SetBinding
-local SaveBindings = SaveBindings
-local ERR_DUEL_REQUESTED = ERR_DUEL_REQUESTED
-
--- GLOBALS: RETabBinder_OnLoad, RETabBinder_OnEvent, RETabBinder_ConfigReload
+--GLOBALS: RETabBinder_OnLoad, RETabBinder_OnEvent, RETabBinder_ConfigReload
+local print = _G.print
+local InCombatLockdown = _G.InCombatLockdown
+local IsInInstance = _G.IsInInstance
+local GetCurrentBindingSet = _G.GetCurrentBindingSet
+local GetZonePVPInfo = _G.GetZonePVPInfo
+local GetBindingKey = _G.GetBindingKey
+local GetBindingAction = _G.GetBindingAction
+local SetBinding = _G.SetBinding
+local SaveBindings = _G.SaveBindings
+local ERR_DUEL_REQUESTED = _G.ERR_DUEL_REQUESTED
 
 RE.AceConfig = {
 	type = "group",
