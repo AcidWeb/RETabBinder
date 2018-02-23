@@ -2,10 +2,10 @@
 
 	<Script file="RETabBinder.lua"/>
 
-	<Frame name="RETabBinder_Frame">
+	<Frame name="RETabBinderFrame">
 		<Scripts>
-			<OnLoad>RETabBinder_OnLoad(self)</OnLoad>
-			<OnEvent>RETabBinder_OnEvent(event, ...)</OnEvent>
+			<OnLoad>RETabBinder:OnLoad(self)</OnLoad>
+			<OnEvent>RETabBinder:OnEvent(self, event, ...)</OnEvent>
 		</Scripts>
 	</Frame>
 
