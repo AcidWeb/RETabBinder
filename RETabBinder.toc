@@ -4,6 +4,9 @@
 ## Version: 1.3.11
 ## Author: AcidWeb, Veev-Executus(US)
 ## SavedVariablesPerCharacter: RETabBinderSettings
+## X-Website: https://www.curseforge.com/wow/addons/retabbinder
+## X-Curse-Project-ID: 39100
+## X-WoWI-ID: 19089
 
 Embeds.xml
 RETabBinder.xml
