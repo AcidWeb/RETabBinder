@@ -11,6 +11,7 @@ local GetBindingKey = _G.GetBindingKey
 local GetBindingAction = _G.GetBindingAction
 local SetBinding = _G.SetBinding
 local SaveBindings = _G.SaveBindings
+local ElvUI = _G.ElvUI
 
 RE.AceConfig = {
 	type = "group",
@@ -31,6 +32,13 @@ RE.DefaultConfig = {
 }
 RE.Fail = false
 
+local function ElvUISwag(sender)
+  if sender == "Livarax-BurningLegion" then
+    return [[|TInterface\PvPRankBadges\PvPRank09:0|t ]]
+  end
+  return nil
+end
+
 function RE:OnLoad(self)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -44,6 +52,9 @@ function RE:OnEvent(self, event, ...)
 	if event == "ADDON_LOADED" and ... == "RETabBinder" then
 		if not _G.RETabBinderSettings then
 			_G.RETabBinderSettings = RE.DefaultConfig
+		end
+		if ElvUI then
+			_G.ElvUI[1]:GetModule("Chat"):AddPluginIcons(ElvUISwag)
 		end
 		RE.Settings = _G.RETabBinderSettings
 		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
