@@ -2,7 +2,7 @@ local _G = _G
 local _, RE = ...
 _G.RETabBinder = RE
 
-local print = _G.print
+local print, pairs = _G.print, _G.pairs
 local InCombatLockdown = _G.InCombatLockdown
 local IsInInstance = _G.IsInInstance
 local GetCurrentBindingSet = _G.GetCurrentBindingSet
@@ -25,18 +25,28 @@ RE.AceConfig = {
 			set = function(_, val) RE.Settings.DefaultKey = val; RE:OnEvent(nil, "ZONE_CHANGED_NEW_AREA") end,
 			get = function(_) return RE.Settings.DefaultKey end
 		},
+		OpenWorld = {
+			name = "Consider normal zones as PvP ones",
+			desc = "Enable to consider normal open world zones as PvP instances.",
+			type = "toggle",
+			width = "full",
+			order = 2,
+			set = function(_, val) RE.Settings.OpenWorld = val; RE:OnEvent(nil, "ZONE_CHANGED_NEW_AREA") end,
+			get = function(_) return RE.Settings.OpenWorld end
+		}
 	}
 }
 RE.DefaultConfig = {
-	DefaultKey = true
+	DefaultKey = true,
+	OpenWorld = false
 }
 RE.Fail = false
 
 local function ElvUISwag(sender)
-  if sender == "Livarax-BurningLegion" then
-    return [[|TInterface\PvPRankBadges\PvPRank09:0|t ]]
-  end
-  return nil
+	if sender == "Livarax-BurningLegion" then
+		return [[|TInterface\PvPRankBadges\PvPRank09:0|t ]]
+	end
+	return nil
 end
 
 function RE:OnLoad(self)
@@ -53,13 +63,18 @@ function RE:OnEvent(self, event, ...)
 		if not _G.RETabBinderSettings then
 			_G.RETabBinderSettings = RE.DefaultConfig
 		end
-		if ElvUI then
-			_G.ElvUI[1]:GetModule("Chat"):AddPluginIcons(ElvUISwag)
-		end
 		RE.Settings = _G.RETabBinderSettings
+		for key, value in pairs(RE.DefaultConfig) do
+			if RE.Settings[key] == nil then
+				RE.Settings[key] = value
+			end
+		end
 		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
 		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
 		RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
+		if ElvUI then
+			_G.ElvUI[1]:GetModule("Chat"):AddPluginIcons(ElvUISwag)
+		end
 		self:UnregisterEvent("ADDON_LOADED")
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
 		if event == "CHAT_MSG_SYSTEM" and ... == _G.ERR_DUEL_REQUESTED then
@@ -100,7 +115,7 @@ function RE:OnEvent(self, event, ...)
 			CurrentBind = GetBindingAction(TargetKey)
 		end
 
-		if ZoneType == "arena" or PVPType == "combat" or ZoneType == "pvp" or event == "DUEL_REQUESTED" then
+		if ZoneType == "arena" or ZoneType == "pvp" or (RE.Settings.OpenWorld and ZoneType == "none") or PVPType == "combat" or event == "DUEL_REQUESTED" then
 			if CurrentBind ~= "TARGETNEARESTENEMYPLAYER" then
 				local Success
 				if TargetKey == nil then
