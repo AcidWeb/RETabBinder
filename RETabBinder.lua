@@ -71,7 +71,7 @@ function RE:OnEvent(self, event, ...)
 		end
 		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
 		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
-		RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
+		--RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
 		if ElvUI then
 			_G.ElvUI[1]:GetModule("Chat"):AddPluginIcons(ElvUISwag)
 		end
