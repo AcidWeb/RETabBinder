@@ -32,15 +32,24 @@ RE.AceConfig = {
 			order = 2,
 			set = function(_, val) RE.Settings.OpenWorld = val; RE:OnEvent(nil, "ZONE_CHANGED_NEW_AREA") end,
 			get = function(_) return RE.Settings.OpenWorld end
+		},
+		SilentMode = {
+			name = "Disable chat messages",
+			desc = "Disable printing status messages to the chat window.",
+			type = "toggle",
+			width = "full",
+			order = 3,
+			set = function(_, val) RE.Settings.SilentMode = val end,
+			get = function(_) return RE.Settings.SilentMode end
 		}
 	}
 }
 RE.DefaultConfig = {
 	DefaultKey = true,
-	OpenWorld = false
+	OpenWorld = false,
+	SilentMode = false
 }
 RE.Fail = false
-
 
 function RE:OnLoad(self)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -119,7 +128,9 @@ function RE:OnEvent(self, event, ...)
 				if Success then
 					SaveBindings(BindSet)
 					RE.Fail = false
-					print("\124cFF74D06C[RETabBinder]\124r PVP Mode")
+					if not RE.Settings.SilentMode then
+						print("\124cFF74D06C[RETabBinder]\124r PVP Mode")
+					end
 				else
 					RE.Fail = true
 				end
@@ -138,7 +149,9 @@ function RE:OnEvent(self, event, ...)
 				if Success then
 					SaveBindings(BindSet)
 					RE.Fail = false
-					print("\124cFF74D06C[RETabBinder]\124r PVE Mode")
+					if not RE.Settings.SilentMode then
+						print("\124cFF74D06C[RETabBinder]\124r PVE Mode")
+					end
 				else
 					RE.Fail = true
 				end
