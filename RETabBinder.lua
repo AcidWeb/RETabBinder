@@ -11,7 +11,6 @@ local GetBindingKey = _G.GetBindingKey
 local GetBindingAction = _G.GetBindingAction
 local SetBinding = _G.SetBinding
 local SaveBindings = _G.SaveBindings
-local ElvUI = _G.ElvUI
 
 RE.AceConfig = {
 	type = "group",
@@ -42,12 +41,6 @@ RE.DefaultConfig = {
 }
 RE.Fail = false
 
-local function ElvUISwag(sender)
-	if sender == "Livarax-BurningLegion" then
-		return [[|TInterface\PvPRankBadges\PvPRank09:0|t ]]
-	end
-	return nil
-end
 
 function RE:OnLoad(self)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -72,9 +65,6 @@ function RE:OnEvent(self, event, ...)
 		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
 		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
 		--RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
-		if ElvUI then
-			_G.ElvUI[1]:GetModule("Chat"):AddPluginIcons(ElvUISwag)
-		end
 		self:UnregisterEvent("ADDON_LOADED")
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
 		if event == "CHAT_MSG_SYSTEM" and ... == _G.ERR_DUEL_REQUESTED then
