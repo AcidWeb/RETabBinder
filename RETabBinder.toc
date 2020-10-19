@@ -8,5 +8,6 @@
 ## X-Curse-Project-ID: 39100
 ## X-WoWI-ID: 19089
 
+TaintLess.xml
 Embeds.xml
 RETabBinder.xml
