@@ -9,5 +9,3 @@ externals:
 
 ignore:
   - README.md
-  - .luacheckrc
-  - Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml
