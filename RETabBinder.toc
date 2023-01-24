@@ -1,7 +1,7 @@
-## Interface: 100002
+## Interface: 100005
 ## Title: |cFF74D06CRE|rTabBinder
 ## Notes: Changes TAB binding to only target enemy players when in PvP zones.
-## Version: 1.7.1
+## Version: 1.7.2
 ## Author: AcidWeb, Veev-Executus(US)
 ## SavedVariablesPerCharacter: RETabBinderSettings
 ## X-WoWI-ID: 19089
