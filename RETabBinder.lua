@@ -1,16 +1,14 @@
-local _G = _G
 local _, RE = ...
-_G.RETabBinder = RE
+RETabBinder = RE
 
-local print, pairs = _G.print, _G.pairs
-local InCombatLockdown = _G.InCombatLockdown
-local IsInInstance = _G.IsInInstance
-local GetCurrentBindingSet = _G.GetCurrentBindingSet
-local GetZonePVPInfo = _G.GetZonePVPInfo
-local GetBindingKey = _G.GetBindingKey
-local GetBindingAction = _G.GetBindingAction
-local SetBinding = _G.SetBinding
-local SaveBindings = _G.SaveBindings
+local InCombatLockdown = InCombatLockdown
+local IsInInstance = IsInInstance
+local GetCurrentBindingSet = GetCurrentBindingSet
+local GetZonePVPInfo = C_PvP.GetZonePVPInfo
+local GetBindingKey = GetBindingKey
+local GetBindingAction = GetBindingAction
+local SetBinding = SetBinding
+local SaveBindings = SaveBindings
 
 RE.AceConfig = {
 	type = "group",
@@ -62,21 +60,21 @@ end
 
 function RE:OnEvent(self, event, ...)
 	if event == "ADDON_LOADED" and ... == "RETabBinder" then
-		if not _G.RETabBinderSettings then
-			_G.RETabBinderSettings = RE.DefaultConfig
+		if not RETabBinderSettings then
+			RETabBinderSettings = RE.DefaultConfig
 		end
-		RE.Settings = _G.RETabBinderSettings
+		RE.Settings = RETabBinderSettings
 		for key, value in pairs(RE.DefaultConfig) do
 			if RE.Settings[key] == nil then
 				RE.Settings[key] = value
 			end
 		end
-		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
-		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("RETabBinder", RE.AceConfig)
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("RETabBinder", "RETabBinder")
 		--RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
 		self:UnregisterEvent("ADDON_LOADED")
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
-		if event == "CHAT_MSG_SYSTEM" and ... == _G.ERR_DUEL_REQUESTED then
+		if event == "CHAT_MSG_SYSTEM" and ... == ERR_DUEL_REQUESTED then
 			event = "DUEL_REQUESTED"
 		elseif event == "CHAT_MSG_SYSTEM" then
 			return

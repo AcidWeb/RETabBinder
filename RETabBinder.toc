@@ -8,6 +8,5 @@
 ## X-WoWI-ID: 19089
 ## X-Wago-ID: Rn6Ve8Nd
 
-TaintLess.xml
 Embeds.xml
 RETabBinder.xml
