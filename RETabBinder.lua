@@ -1,6 +1,7 @@
 local _, RE = ...
 RETabBinder = RE
 
+local issecretvalue = issecretvalue
 local InCombatLockdown = InCombatLockdown
 local IsInInstance = IsInInstance
 local GetCurrentBindingSet = GetCurrentBindingSet
@@ -74,7 +75,7 @@ function RE:OnEvent(self, event, ...)
 		--RE:OnEvent(self, "ZONE_CHANGED_NEW_AREA")
 		self:UnregisterEvent("ADDON_LOADED")
 	elseif event == "ZONE_CHANGED_NEW_AREA" or (event == "PLAYER_REGEN_ENABLED" and RE.Fail) or event == "DUEL_REQUESTED" or event == "DUEL_FINISHED" or event == "CHAT_MSG_SYSTEM" then
-		if event == "CHAT_MSG_SYSTEM" and ... == ERR_DUEL_REQUESTED then
+		if event == "CHAT_MSG_SYSTEM" and not issecretvalue(...) and ... == ERR_DUEL_REQUESTED then
 			event = "DUEL_REQUESTED"
 		elseif event == "CHAT_MSG_SYSTEM" then
 			return
