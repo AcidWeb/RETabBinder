@@ -1,7 +1,7 @@
-## Interface: 120000
+## Interface: 120001
 ## Title: |cFF74D06CRE|rTabBinder
 ## Notes: Changes TAB binding to only target enemy players when in PvP zones.
-## Version: 1.7.19
+## Version: 1.7.20
 ## Author: AcidWeb, Veev-Executus(US)
 ## SavedVariablesPerCharacter: RETabBinderSettings
 ## IconTexture: Interface\AddOns\RETabBinder\RELogo
